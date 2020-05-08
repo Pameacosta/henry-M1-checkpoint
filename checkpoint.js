@@ -43,7 +43,16 @@ const {
 // allí la recursión
 
 var objContains = function(obj, prop, value){
- 
+  
+    if(typeof prop === typeof value){
+      return true;
+    } else if (prop === undefined && value === undefined){
+      return false;
+
+    }
+    
+
+
 }
 
 
@@ -58,8 +67,24 @@ var objContains = function(obj, prop, value){
 // [Para más información del método: https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/isArray]
 
 var countArray = function(array){
-  
+  //var integrado = [[0,1], [2,3], [4,5]].reduce(function(a,b) {
+  //return a.concat(b);
+  if (array === null){
+    return 0;
+  }else 
+  function recorrido(array){
+    for(var i =0; i< array.length; i++){
+      if(Array.isArray(array[i])){
+        recorrido(array[i]);
+      }else 
+      return array[i];
+    }
+  }
+   var suma = array.reduce(recorrido(acc,value))
+   return acc + value;
 }
+
+
 
 // ---------------------
 
@@ -77,9 +102,19 @@ var countArray = function(array){
 //    lista.add(3);
 //    lista.size(); --> 3
 
-LinkedList.prototype.size = function(){
+LinkedList.prototype.size = function(current = this.head, acum = 1){
+  
+  if(this.head === null){
+    return 0;
+  }
+  if (current.next !== null){
+    return this.size(current.next, acum = acum + 1);
+  }
+  return acum;
+  }
  
-}
+
+
 
 
 // EJERCICIO 4
@@ -99,8 +134,17 @@ LinkedList.prototype.size = function(){
 //    sin antes tener cargada la posición 0 y 1.
 
 LinkedList.prototype.addInPos = function(pos, value){
-  
+//   var newNode = new Node(pos,value);
+ // if(this.head === null){
+   // return this.head = new Node(pos, value)
+ // }
+    
+    
+ //newNode.next = this.head;
+   // this.head = newNode;
 }
+
+ 
 
 // EJERCICIO 5
 // Implementar el método reverse dentro del prototype de LinkedList que invierta el orden de la lista
@@ -110,8 +154,9 @@ LinkedList.prototype.addInPos = function(pos, value){
 //    Lista nueva luego de aplicar el reverse: Head --> 13 --> 10 --> 4 --> 1 --> null
 
 LinkedList.prototype.reverse = function(){
- 
+  return new LinkedList(this.reverse);
 }
+
 
 
 // ----------------------
@@ -165,6 +210,26 @@ var cardGame = function(mazoUserA, mazoUserB){
 
 var generateBST = function(array){
  
+  
+  var nodo = new BinarySearchTree(array);
+  this.left = null;
+  this.right = null;
+ 
+  if(array > this.array){
+    if(this.right !== null){
+      this.right.insert(array);
+    } else {
+      this.right = nodo;
+    }
+  } else{
+    if(this.left !== null){
+      this.left.insert(array);
+    } else{
+      this.left = nodo;
+    }
+  }
+  return generateBST;
+ 
 }
 
 
@@ -185,6 +250,19 @@ var generateBST = function(array){
 
 
 var binarySearch = function (array, target) {
+  var encontro = false;
+    var posicion = -1;
+    var i = 0;
+ 
+    while(!encontro && i < array.length) {
+        if(array[i] == target) {
+          encontro = true;
+            posicion = i;
+        } else {
+            i += 1;
+        }
+    }
+    return posicion;
 
   
 }
@@ -199,6 +277,19 @@ var binarySearch = function (array, target) {
 
 
 var selectionSort = function(array) {
+  var swap = true;
+    while(swap){
+      swap = false;
+      for(var i = 0; i< array.length -1; i++){
+       if(array[i] > array[i+1]){
+         var aux = array[i];
+         array[i] = array[i+1];
+         array[i+1] = aux;
+         swap = true;
+       }
+      }
+    }
+     return array;
   
 }
 
@@ -217,7 +308,11 @@ var selectionSort = function(array) {
 //    sumaDiez(11); --> Devolverá 21 (Ya que 11 + 10 = 21)
 
 function closureSum(numFijo) {
- 
+  
+  return function(n) {
+    return n + numFijo;
+
+   }
 }
 
 // -------------------
