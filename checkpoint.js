@@ -44,16 +44,18 @@ const {
 
 var objContains = function(obj, prop, value){
   
-    if(typeof prop === typeof value){
+    if(typeof prop === typeof value ){
       return true;
-    } else if (prop === undefined && value === undefined){
+    } 
+    if(typeof prop !== typeof obj){
       return false;
+    }
 
     }
     
 
 
-}
+
 
 
 // EJERCICIO 2
@@ -65,27 +67,30 @@ var objContains = function(obj, prop, value){
 //    countArray(array); --> Debería devolver 28 (1 + 2 + 3 + 4 + 5 + 6 + 7)
 // Pista: utilizar el método Array.isArray() para determinar si algun elemento de array es un array anidado
 // [Para más información del método: https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/isArray]
-
+ 
 var countArray = function(array){
-  //var integrado = [[0,1], [2,3], [4,5]].reduce(function(a,b) {
-  //return a.concat(b);
-  if (array === null){
-    return 0;
-  }else 
-  function recorrido(array){
-    for(var i =0; i< array.length; i++){
-      if(Array.isArray(array[i])){
-        recorrido(array[i]);
-      }else 
-      return array[i];
-    }
-  }
-   var suma = array.reduce(recorrido(acc,value))
-   return acc + value;
-}
 
-
-
+      
+  var suma = 0;
+      return function(array){
+         
+          for(i = 0; i < array.length; i ++){
+  
+            if(Array.isArray(array[i])){
+              countArray(array[i]);
+             } else { 
+              suma += array[i];
+             }
+              
+          }
+          
+          return suma;
+      }
+};
+    
+   
+  
+  
 // ---------------------
 
 // ----- LinkedList -----
@@ -134,14 +139,11 @@ LinkedList.prototype.size = function(current = this.head, acum = 1){
 //    sin antes tener cargada la posición 0 y 1.
 
 LinkedList.prototype.addInPos = function(pos, value){
-//   var newNode = new Node(pos,value);
- // if(this.head === null){
-   // return this.head = new Node(pos, value)
- // }
-    
-    
- //newNode.next = this.head;
-   // this.head = newNode;
+  var nodoActual = this.head;
+
+  if(nodoActual === null){
+    return null;
+  }
 }
 
  
@@ -154,7 +156,10 @@ LinkedList.prototype.addInPos = function(pos, value){
 //    Lista nueva luego de aplicar el reverse: Head --> 13 --> 10 --> 4 --> 1 --> null
 
 LinkedList.prototype.reverse = function(){
-  return new LinkedList(this.reverse);
+
+  var lista = new LinkedList.reverse;
+  return lista;
+   
 }
 
 
@@ -186,7 +191,26 @@ LinkedList.prototype.reverse = function(){
 //    - mazoUserB = [6,9,10,3,6,4]
 
 var cardGame = function(mazoUserA, mazoUserB){
-
+  while (mazoUserA.size() !== 0 && mazoUserB.size() !== 0) {
+    var cartaA = mazoUserA.dequeue();
+    var cartaB = mazoUserB.dequeue();
+    if(cartaA > cartaB){
+      mazoUserA.enqueue(cartaA);
+      mazoUserA.enqueue(cartaB);
+    } else if(cartaA < cartaB){
+      mazoUserB.enqueue(cartaB);
+      mazoUserB.enqueue(cartaA);
+    }
+  }
+  if(mazoUserA.size() === 0 && mazoUserB.size() === 0){
+    return "Game tie!";
+  }
+  if(mazoUserA.size() === 0){
+    return "B wins!";
+  }
+  if(mazoUserB.size() === 0){
+    return "A wins!";
+  }
 }
 
 // ---------------
@@ -208,30 +232,26 @@ var cardGame = function(mazoUserA, mazoUserB){
 //      \
 //       5
 
-var generateBST = function(array){
- 
+var generateBST = function(cb,array){
+ this.left = null;
+ this.rigth = null;
+ this.head = null;
   
-  var nodo = new BinarySearchTree(array);
-  this.left = null;
-  this.right = null;
- 
-  if(array > this.array){
-    if(this.right !== null){
-      this.right.insert(array);
-    } else {
-      this.right = nodo;
-    }
-  } else{
-    if(this.left !== null){
-      this.left.insert(array);
-    } else{
-      this.left = nodo;
-    }
+  if(array == null){
+    var array =[];
+  }
+  if(this.left !== null){
+    array.push(this.left);
+  }
+  if(this.right !== null){
+    array.push(this.right);
+  }
+  cb(this.value);
+  if(array.length > 0){
+    array.shift().generateBST(cb,array);
   }
   return generateBST;
- 
-}
-
+};
 
 // ---------------
 
